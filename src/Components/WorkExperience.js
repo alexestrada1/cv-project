@@ -18,9 +18,9 @@ class WorkExp extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log("hello world");
     const { jobTitle, company, yearsWorked } = this.state;
     const newExp = { jobTitle, company, yearsWorked };
+    this.props.onHideWorkForm();
     this.props.onSubmit(newExp);
     this.setState({
       jobTitle: "",
@@ -31,9 +31,9 @@ class WorkExp extends React.Component {
 
   render() {
     const { jobTitle, company, yearsWorked } = this.state;
+    const {showWorkExpForm} = this.props
     return (
-      <div className="work-exp" onSubmit={this.handleSubmit}>
-        <h2>Work Experience</h2>
+      <div className="work-exp" style={{display: showWorkExpForm ? 'block': 'none'}}>
         <label htmlFor="experience">Job Title: </label>
         <input
           type="text"
