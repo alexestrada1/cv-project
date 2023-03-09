@@ -24,6 +24,7 @@ class GeneralInfo extends React.Component {
 
     return (
       <div className="gen-info">
+        <h2>General Info</h2>
         <label htmlFor="name">Enter name: </label>
         <input type="text" id="name" value={name} onChange = {this.handleChange}></input>
 
