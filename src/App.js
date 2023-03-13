@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import GeneralInfo from "./Components/GeneralInfo";
 import WorkExp from "./Components/WorkExperience";
 import SchoolExp from "./Components/SchoolExperience";
+import Overview from "./Components/Overview";
 
 class App extends Component {
   constructor(props) {
@@ -62,10 +63,12 @@ class App extends Component {
           <br />
           <h2>Work Experience</h2>
           <div onClick={this.handleToggleWorkForm} style={{cursor:'pointer'}}>+</div>
+          <Overview exp = {this.state.workExp}/>
          <WorkExp workExp={this.state.workExp} onSubmit={this.submitWorkExp} showWorkExpForm={this.state.showWorkExpForm} onHideWorkForm={this.handleHideWorkForm}/>
           <br />
           <h2>School Experience</h2>
           <div onClick={this.handleToggleSchoolForm} style={{cursor:'pointer'}}>+</div>
+          <Overview exp = {this.state.schoolExp}/>
           <SchoolExp schoolExp={this.state.schoolExp} onSubmit={this.submitSchoolExp} showSchoolForm={this.state.showSchoolForm} onHideSchoolForm={this.handleHideSchoolForm}
           />
           <button onClick={this.submitForm}>Submit CV</button>
