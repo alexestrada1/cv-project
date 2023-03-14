@@ -55,6 +55,16 @@ class App extends Component {
       showSchoolForm: false
     })
   }
+  handleDeleteWork = (index) =>{
+    const newArray = [...this.state.workExp];
+    newArray.splice(index, 1);
+    this.setState({ workExp: newArray });
+}
+handleDeleteSchool = (index) =>{
+  const newArray = [...this.state.schoolExp];
+  newArray.splice(index, 1);
+  this.setState({ schoolExp: newArray });
+}
   render() {
     return (
       <div className="App">
@@ -63,12 +73,12 @@ class App extends Component {
           <br />
           <h2>Work Experience</h2>
           <div onClick={this.handleToggleWorkForm} style={{cursor:'pointer'}}>+</div>
-          <Overview exp = {this.state.workExp}/>
+          <Overview exp = {this.state.workExp} onDelete={this.handleDeleteWork}/>
          <WorkExp workExp={this.state.workExp} onSubmit={this.submitWorkExp} showWorkExpForm={this.state.showWorkExpForm} onHideWorkForm={this.handleHideWorkForm}/>
           <br />
           <h2>School Experience</h2>
           <div onClick={this.handleToggleSchoolForm} style={{cursor:'pointer'}}>+</div>
-          <Overview exp = {this.state.schoolExp}/>
+          <Overview exp = {this.state.schoolExp} onDelete={this.handleDeleteSchool}/>
           <SchoolExp schoolExp={this.state.schoolExp} onSubmit={this.submitSchoolExp} showSchoolForm={this.state.showSchoolForm} onHideSchoolForm={this.handleHideSchoolForm}
           />
           <button onClick={this.submitForm}>Submit CV</button>
