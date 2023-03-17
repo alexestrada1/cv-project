@@ -1,66 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 
-class WorkExp extends React.Component {
-  constructor(props) {
-    super(props);
+const WorkExp = ({ onSubmit, showWorkExpForm, onHideWorkForm }) => {
+  const [jobTitle, setJobTitle] = useState("");
+  const [company, setCompany] = useState("");
+  const [yearsWorked, setYearsWorked] = useState("");
 
-    this.state = {
-      jobTitle: "",
-      company: "",
-      yearsWorked: "",
-    };
-  }
-
-  handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { id, value } = e.target;
-    this.setState({ [id]: value });
+    if (id === "jobTitle") {
+      setJobTitle(value);
+    } else if (id === "company") {
+      setCompany(value);
+    } else if (id === "yearsWorked") {
+      setYearsWorked(value);
+    }
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { jobTitle, company, yearsWorked } = this.state;
     const newExp = { jobTitle, company, yearsWorked };
-    this.props.onHideWorkForm();
-    this.props.onSubmit(newExp);
-    this.setState({
-      jobTitle: "",
-      company: "",
-      yearsWorked: "",
-    });
+    onHideWorkForm();
+    onSubmit(newExp);
+    setJobTitle("");
+    setCompany("");
+    setYearsWorked("");
   };
 
-  render() {
-    const { jobTitle, company, yearsWorked } = this.state;
-    const {showWorkExpForm} = this.props
-    return (
-      <div className="work-exp" style={{display: showWorkExpForm ? 'block': 'none'}}>
-        <label htmlFor="experience">Job Title: </label>
-        <input
-          type="text"
-          id="jobTitle"
-          value={jobTitle}
-          onChange={this.handleInputChange}
-        ></input>
+  return (
+    <div className="work-exp" style={{ display: showWorkExpForm ? "block" : "none" }}>
+      <label htmlFor="experience">Job Title: </label>
+      <input type="text" id="jobTitle" value={jobTitle} onChange={handleInputChange} />
 
-        <label htmlFor="compant">Company: </label>
-        <input
-          type="text"
-          id="company"
-          value={company}
-          onChange={this.handleInputChange}
-        ></input>
+      <label htmlFor="compant">Company: </label>
+      <input type="text" id="company" value={company} onChange={handleInputChange} />
 
-        <label htmlFor="experience-years">Years Worked: </label>
-        <input
-          type="number"
-          id="yearsWorked"
-          value={yearsWorked}
-          min="0"
-          onChange={this.handleInputChange}
-        ></input>
-        <button onClick={this.handleSubmit}>Add Experience</button>
-      </div>
-    );
-  }
-}
+      <label htmlFor="experience-years">Years Worked: </label>
+      <input
+        type="number"
+        id="yearsWorked"
+        value={yearsWorked}
+        min="0"
+        onChange={handleInputChange}
+      />
+      <button onClick={handleSubmit}>Add Experience</button>
+    </div>
+  );
+};
+
 export default WorkExp;

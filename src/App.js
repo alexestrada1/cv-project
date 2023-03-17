@@ -1,90 +1,76 @@
-import React, { Component } from "react";
+import React, {useState} from "react";
 import GeneralInfo from "./Components/GeneralInfo";
 import WorkExp from "./Components/WorkExperience";
 import SchoolExp from "./Components/SchoolExperience";
 import Overview from "./Components/Overview";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showWorkExpForm: false,
-      showSchoolForm: false,
-      workExp: [],
-      schoolExp: [],
-    };
-  }
+const App = () => {
+  const [showWorkExpForm, setShowWorkExpForm] = useState(false);
+  const [showSchoolForm, setShowSchoolExpForm] = useState(false);
+  const[workExp, setWorkExp] = useState([]);
+  const[schoolExp, setSchoolExp] = useState([]);
+  const [generalInfo, setGeneralInfo] = useState('')
 
-  submitForm = (e) => {
+  const submitForm = (e) => {
     e.preventDefault();
-    this.setState({
-      showSchoolForm:false,
-      showWorkExpForm:false
-    })
-    console.log(this.state);
+    setShowWorkExpForm(false);
+    setShowSchoolExpForm(false);
+
+    //console.log({state});
   };
-  handleGeneralInfoChange = (fields) => {
-    this.setState(fields);
+  const handleGeneralInfoChange = (fields) => {
+    setGeneralInfo(fields);
   };
-  submitWorkExp = (workExpData) => {
-    const updatedWorkExperiences = [...this.state.workExp, workExpData];
-    this.setState({ workExp: updatedWorkExperiences });
+  const submitWorkExp = (workExpData) => {
+    const updatedWorkExperiences = [...workExp, workExpData];
+    setWorkExp(updatedWorkExperiences)
   };
-  handleToggleWorkForm = () =>{
-    this.setState(prevState => ({
-      showWorkExpForm: !prevState.showForm,
-    }))
+  const handleToggleWorkForm = () =>{
+    setShowWorkExpForm(!showWorkExpForm)
   }
-  handleHideWorkForm = () =>{
-    this.setState({
-      showWorkExpForm: false
-    })
+  const handleHideWorkForm = () =>{
+    setShowWorkExpForm(false)
   }
 
-  submitSchoolExp = (schoolExpData) => {
-    const updatesSchoolExp = [ ...this.state.schoolExp, schoolExpData ];
-    this.setState({ schoolExp: updatesSchoolExp });
+  const submitSchoolExp = (schoolExpData) => {
+    const updatesSchoolExp = [ ...schoolExp, schoolExpData ];
+    setSchoolExp(updatesSchoolExp);
   };
-  handleToggleSchoolForm = () =>{
-    this.setState(prevState => ({
-      showSchoolForm: !prevState.showForm,
-    }))
+  const handleToggleSchoolForm = () =>{
+    setShowSchoolExpForm(!showSchoolForm)
   }
-  handleHideSchoolForm = () =>{
-    this.setState({
-      showSchoolForm: false
-    })
+  const handleHideSchoolForm = () =>{
+    setShowSchoolExpForm(false)
+
   }
-  handleDeleteWork = (index) =>{
-    const newArray = [...this.state.workExp];
+  const handleDeleteWork = (index) =>{
+    const newArray = [...workExp];
     newArray.splice(index, 1);
-    this.setState({ workExp: newArray });
+    setWorkExp(newArray );
 }
-handleDeleteSchool = (index) =>{
-  const newArray = [...this.state.schoolExp];
+const handleDeleteSchool = (index) =>{
+  const newArray = [...schoolExp];
   newArray.splice(index, 1);
-  this.setState({ schoolExp: newArray });
+  setSchoolExp(newArray);
 }
-  render() {
     return (
       <div className="App">
-        <form onSubmit={this.submitForm}>
-          <GeneralInfo onChange={this.handleGeneralInfoChange} />
+        <form onSubmit={submitForm}>
+          <GeneralInfo onChange={handleGeneralInfoChange} />
           <br />
           <h2>Work Experience</h2>
-          <div onClick={this.handleToggleWorkForm} style={{cursor:'pointer'}}>+</div>
-          <Overview exp = {this.state.workExp} onDelete={this.handleDeleteWork}/>
-         <WorkExp workExp={this.state.workExp} onSubmit={this.submitWorkExp} showWorkExpForm={this.state.showWorkExpForm} onHideWorkForm={this.handleHideWorkForm}/>
+          <div onClick={handleToggleWorkForm} style={{cursor:'pointer'}}>+</div>
+          <Overview exp = {workExp} onDelete={handleDeleteWork}/>
+         <WorkExp workExp={workExp} onSubmit={submitWorkExp} showWorkExpForm={showWorkExpForm} onHideWorkForm={handleHideWorkForm}/>
           <br />
           <h2>School Experience</h2>
-          <div onClick={this.handleToggleSchoolForm} style={{cursor:'pointer'}}>+</div>
-          <Overview exp = {this.state.schoolExp} onDelete={this.handleDeleteSchool}/>
-          <SchoolExp schoolExp={this.state.schoolExp} onSubmit={this.submitSchoolExp} showSchoolForm={this.state.showSchoolForm} onHideSchoolForm={this.handleHideSchoolForm}
+          <div onClick={handleToggleSchoolForm} style={{cursor:'pointer'}}>+</div>
+          <Overview exp = {schoolExp} onDelete={handleDeleteSchool}/>
+          <SchoolExp schoolExp={schoolExp} onSubmit={submitSchoolExp} showSchoolForm={showSchoolForm} onHideSchoolForm={handleHideSchoolForm}
           />
-          <button onClick={this.submitForm}>Submit CV</button>
+          <button onClick={submitForm}>Submit CV</button>
         </form>
       </div>
     );
-  }
 }
 export default App;

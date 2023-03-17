@@ -1,56 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 
-class SchoolExp extends React.Component {
-  constructor(props) {
-    super(props);
+const SchoolExp = (props) => {
+  const [school, setSchool] = useState("");
+  const [graduationYear, setGraduationYear] = useState("");
 
-    this.state = {
-      school: "",
-      graduationYear: "",
-    };
-  }
-
-  handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { id, value } = e.target;
-    this.setState({ [id]: value });
+    id === "school" ? setSchool(value) : setGraduationYear(value);
   };
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const { school, graduationYear } = this.state;
     const newSchoolExp = { school, graduationYear };
-    this.props.onHideSchoolForm();
-    this.props.onSubmit(newSchoolExp);
-    this.setState({
-      school: "",
-      graduationYear: "",
-    });
+    props.onHideSchoolForm();
+    props.onSubmit(newSchoolExp);
+    setSchool("");
+    setGraduationYear("");
   };
-  render() {
-    const { school, graduationYear } = this.state;
-    const{showSchoolForm} = this.props
-    return (
-      <div className="school-exp" onSubmit={this.handleSubmit} style={{display: showSchoolForm ? 'block': 'none'}}>
-        <label htmlFor="school">School: </label>
-        <input
-          type="text"
-          id="school"
-          value={school}
-          onChange={this.handleInputChange}
-        ></input>
 
-        <label htmlFor="graduation-year">Year of Graduation: </label>
-        <input
-          type="text"
-          id="graduationYear"
-          value={graduationYear}
-          onChange={this.handleInputChange}
-        ></input>
+  const { showSchoolForm } = props;
 
-        <button onClick={this.handleSubmit}>Add School Experience</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div
+      className="school-exp"
+      onSubmit={handleSubmit}
+      style={{ display: showSchoolForm ? "block" : "none" }}
+    >
+      <label htmlFor="school">School: </label>
+      <input
+        type="text"
+        id="school"
+        value={school}
+        onChange={handleInputChange}
+      ></input>
+
+      <label htmlFor="graduation-year">Year of Graduation: </label>
+      <input
+        type="text"
+        id="graduationYear"
+        value={graduationYear}
+        onChange={handleInputChange}
+      ></input>
+
+      <button onClick={handleSubmit}>Add School Experience</button>
+    </div>
+  );
+};
 
 export default SchoolExp;

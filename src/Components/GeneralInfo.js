@@ -1,41 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 
-class GeneralInfo extends React.Component {
-  constructor(props) {
-    super(props);
+const GeneralInfo = ({ onChange }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
-    this.state = {
-      name: "",
-      email: "",
-      phone: ""
-    };
-  }
-  
-  handleChange = e =>{
-    const {id, value} = e.target;
-    this.setState({
-      [id]: value,
-    })
-    this.props.onChange(this.state)
-  }
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
 
-  render() {
-    const {name, email, phone} = this.state
+    switch (id) {
+      case "name":
+        setName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "phone":
+        setPhone(value);
+        break;
+      default:
+        break;
+    }
 
-    return (
-      <div className="gen-info">
-        <h2>General Info</h2>
-        <label htmlFor="name">Enter name: </label>
-        <input type="text" id="name" value={name} onChange = {this.handleChange}></input>
+    onChange({ name, email, phone });
+  };
 
-        <label htmlFor="email">Email: </label>
-        <input type="email" id="email" value={email} onChange = {this.handleChange}></input>
+  return (
+    <div className="gen-info">
+      <h2>General Info</h2>
+      <label htmlFor="name">Enter name: </label>
+      <input
+        type="text"
+        id="name"
+        value={name}
+        onChange={handleInputChange}
+      ></input>
 
-        <label htmlFor="phone">Phone Number: </label>
-        <input type="tel" id="phone" value={phone} onChange = {this.handleChange}></input>
+      <label htmlFor="email">Email: </label>
+      <input
+        type="email"
+        id="email"
+        value={email}
+        onChange={handleInputChange}
+      ></input>
 
-      </div>
-    );
-  }
-}
+      <label htmlFor="phone">Phone Number: </label>
+      <input
+        type="tel"
+        id="phone"
+        value={phone}
+        onChange={handleInputChange}
+      ></input>
+    </div>
+  );
+};
+
 export default GeneralInfo;
